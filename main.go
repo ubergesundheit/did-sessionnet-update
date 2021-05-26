@@ -14,7 +14,6 @@ import (
 // V:050108
 // V:050203
 
-
 var expectedAuthor = "Somacos GmbH & Co. KG,https://www.somacos.de, SessionNet Version 5.2.3 KP3 bi (Layout 5)"
 var expectedVersion = "V:050203"
 
@@ -53,6 +52,25 @@ func checkVersion() {
 	c.Visit(url)
 }
 
+func checkOparl(path string) {
+	url := "https://oparl.stadt-muenster.de" + path
+
+	c := colly.NewCollector()
+
+	c.OnError(func(_ *colly.Response, err error) {
+		fmt.Printf("'%s' is not available. Thats good %v\n", url, err)
+	})
+
+	c.OnScraped(func(_ *colly.Response) {
+		fmt.Printf("'%s' is available! Thats not good\n", url)
+		os.Exit(1)
+	})
+
+	c.Visit(url)
+}
+
 func main() {
+	checkOparl("")
+	checkOparl("/system")
 	checkVersion()
 }

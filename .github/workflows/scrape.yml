@@ -15,22 +15,25 @@ jobs:
     name: Check SessionNet Version
     runs-on: ubuntu-latest
     steps:
-    - name: Set up Go 1.16.4
-      uses: actions/setup-go@v2.1.3
-      with:
-        go-version: 1.16.4
+    - name: check for intern
+      run: |
+        curl --silent https://oparl.stadt-muenster.de/system | jq ".body" | grep -q "intern"
+    #- name: Set up Go 1.16.4
+    #  uses: actions/setup-go@v2.1.3
+    #  with:
+    #    go-version: 1.16.4
 
-    - uses: actions/checkout@v2.3.4
+    #- uses: actions/checkout@v2.3.4
 
-    - uses: actions/cache@v2.1.4
-      with:
-        path: ~/go/pkg/mod
-        key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
-        restore-keys: |
-          ${{ runner.os }}-go-
+    #- uses: actions/cache@v2.1.4
+    #  with:
+    #    path: ~/go/pkg/mod
+    #    key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+    #    restore-keys: |
+    #      ${{ runner.os }}-go-
 
-    - name: build binary
-      run: go build -o check-session main.go
+    #- name: build binary
+    #  run: go build -o check-session main.go
 
-    - name: Execute notifier
-      run: ./check-session
+    #- name: Execute notifier
+    #  run: ./check-session

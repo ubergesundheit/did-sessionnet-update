@@ -1,0 +1,20 @@
+name: Validate
+on:
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  front-matter:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Validate front matter for changed files
+        run: |
+          git fetch origin "${GITHUB_BASE_REF}"
+          git checkout "${GITHUB_BASE_REF}"
+          git checkout "${GITHUB_REF}"
+          git diff --name-only "refs/heads/${GITHUB_BASE_REF}"
+

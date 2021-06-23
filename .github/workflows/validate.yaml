@@ -12,6 +12,6 @@ jobs:
 
       - name: Validate front matter for changed files
         run: |
-          git fetch origin "${GITHUB_BASE_REF}"
+          git fetch origin "${GITHUB_BASE_REF}":"${GITHUB_BASE_REF}"
           git diff --name-only "refs/heads/${GITHUB_BASE_REF}" -- .
 
